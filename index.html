@@ -9,7 +9,7 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --j900: #064e3b; --j800: #065f46; --j700: #047857;
@@ -173,6 +173,333 @@
         ::-webkit-scrollbar { width:8px; }
         ::-webkit-scrollbar-track { background:#f1f5f9; }
         ::-webkit-scrollbar-thumb { background:var(--j800); border-radius:4px; }
+
+        /* ════════════════════════════════════════════════════════
+           LANDING PAGE
+        ════════════════════════════════════════════════════════ */
+        .lp { font-family: 'Plus Jakarta Sans', sans-serif; background: #050c0a; color: white; overflow-x: hidden; }
+        .lp-display { font-family: 'Syne', sans-serif; }
+
+        /* ── Noise overlay ── */
+        .lp::before {
+            content: '';
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            opacity: 0.4;
+        }
+
+        /* ── LP Nav ── */
+        .lp-nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1.25rem 5%;
+            transition: all .4s ease;
+        }
+        .lp-nav.scrolled {
+            background: rgba(5,12,10,.88);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(250,204,21,.12);
+            padding: .9rem 5%;
+        }
+        .lp-nav-logo {
+            display: flex; align-items: center; gap: .75rem;
+            font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem;
+        }
+        .lp-nav-logo-icon {
+            width: 40px; height: 40px; background: var(--gold);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; color: #050c0a;
+            box-shadow: 0 0 20px rgba(250,204,21,.4);
+        }
+        .lp-nav-links { display: flex; gap: 2.5rem; }
+        .lp-nav-links a {
+            color: rgba(255,255,255,.7); text-decoration: none; font-size: .9rem;
+            font-weight: 500; letter-spacing: .02em; transition: color .2s;
+        }
+        .lp-nav-links a:hover { color: var(--gold); }
+        .lp-nav-cta {
+            background: var(--gold); color: #050c0a;
+            padding: .6rem 1.5rem; border-radius: 9999px;
+            font-weight: 700; font-size: .9rem; border: none; cursor: pointer;
+            transition: all .2s; box-shadow: 0 0 24px rgba(250,204,21,.3);
+        }
+        .lp-nav-cta:hover { transform: scale(1.05); box-shadow: 0 0 36px rgba(250,204,21,.5); }
+
+        /* ── HERO ── */
+        .lp-hero {
+            min-height: 100vh; position: relative; overflow: hidden;
+            display: flex; align-items: center;
+            padding: 120px 5% 80px;
+        }
+        .lp-hero-grid {
+            position: absolute; inset: 0; z-index: 0;
+            background-image:
+                linear-gradient(rgba(250,204,21,.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(250,204,21,.06) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 40%, transparent 100%);
+        }
+        .lp-hero-glow {
+            position: absolute; border-radius: 50%; filter: blur(120px); pointer-events: none;
+        }
+        .lp-hero-glow-1 { width: 600px; height: 600px; background: rgba(6,78,59,.5); top: -100px; right: -100px; }
+        .lp-hero-glow-2 { width: 400px; height: 400px; background: rgba(250,204,21,.12); bottom: 0; left: 10%; }
+        .lp-hero-glow-3 { width: 300px; height: 300px; background: rgba(4,120,87,.3); top: 30%; left: -50px; }
+
+        .lp-hero-content { position: relative; z-index: 2; max-width: 700px; }
+        .lp-hero-eyebrow {
+            display: inline-flex; align-items: center; gap: .5rem;
+            background: rgba(250,204,21,.1); border: 1px solid rgba(250,204,21,.3);
+            color: var(--gold); padding: .4rem 1rem; border-radius: 9999px;
+            font-size: .8rem; font-weight: 700; letter-spacing: .08em;
+            text-transform: uppercase; margin-bottom: 2rem;
+            animation: fadeSlideUp .8s ease both;
+        }
+        .lp-hero-eyebrow-dot {
+            width: 6px; height: 6px; background: var(--gold); border-radius: 50%;
+            animation: pulse-dot 2s ease infinite;
+        }
+        @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
+
+        .lp-hero-h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(3rem, 7vw, 6rem);
+            font-weight: 800; line-height: 1.02; letter-spacing: -.04em;
+            margin: 0 0 1.5rem; color: white;
+            animation: fadeSlideUp .8s .15s ease both;
+        }
+        .lp-hero-h1 em {
+            font-style: normal;
+            background: linear-gradient(135deg, var(--gold), #fb923c);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .lp-hero-sub {
+            font-size: 1.15rem; color: rgba(255,255,255,.6); line-height: 1.7;
+            max-width: 520px; margin: 0 0 2.5rem;
+            animation: fadeSlideUp .8s .3s ease both;
+        }
+        .lp-hero-actions {
+            display: flex; gap: 1rem; flex-wrap: wrap;
+            animation: fadeSlideUp .8s .45s ease both;
+        }
+        .lp-btn-hero-primary {
+            background: linear-gradient(135deg, var(--gold), #fb923c);
+            color: #050c0a; padding: .9rem 2.25rem; border-radius: 9999px;
+            font-weight: 800; font-size: 1rem; border: none; cursor: pointer;
+            display: inline-flex; align-items: center; gap: .6rem;
+            box-shadow: 0 8px 32px rgba(250,204,21,.35);
+            transition: all .25s; letter-spacing: -.01em;
+        }
+        .lp-btn-hero-primary:hover { transform: translateY(-3px); box-shadow: 0 16px 48px rgba(250,204,21,.45); }
+        .lp-btn-hero-secondary {
+            background: transparent; color: white;
+            padding: .9rem 2.25rem; border-radius: 9999px;
+            font-weight: 700; font-size: 1rem; cursor: pointer;
+            border: 1.5px solid rgba(255,255,255,.25);
+            display: inline-flex; align-items: center; gap: .6rem;
+            transition: all .25s;
+        }
+        .lp-btn-hero-secondary:hover { border-color: rgba(255,255,255,.6); background: rgba(255,255,255,.05); }
+
+        /* floating cards */
+        .lp-hero-visual {
+            position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
+            z-index: 2; width: 380px;
+            animation: fadeSlideUp .8s .5s ease both;
+        }
+        .lp-float-card {
+            background: rgba(255,255,255,.04);
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 16px; padding: 1.25rem 1.5rem;
+            backdrop-filter: blur(20px);
+            position: absolute; width: 320px;
+        }
+        .lp-float-card-main {
+            position: relative; top: 0; left: 0;
+            animation: floatCard 5s ease-in-out infinite;
+        }
+        .lp-float-card-2 {
+            top: -60px; right: -30px; width: 200px;
+            animation: floatCard 5s 1s ease-in-out infinite;
+        }
+        .lp-float-card-3 {
+            bottom: -50px; left: -20px; width: 220px;
+            animation: floatCard 5s 2s ease-in-out infinite;
+        }
+        @keyframes floatCard {
+            0%,100%{transform:translateY(0) rotate(0deg)}
+            33%{transform:translateY(-10px) rotate(.5deg)}
+            66%{transform:translateY(6px) rotate(-.3deg)}
+        }
+
+        .lp-hero-stats {
+            display: flex; gap: 2.5rem; margin-top: 3rem;
+            animation: fadeSlideUp .8s .6s ease both;
+        }
+        .lp-stat-item { }
+        .lp-stat-num { font-family:'Syne',sans-serif; font-size:2rem; font-weight:800; color:var(--gold); line-height:1; }
+        .lp-stat-lbl { font-size:.78rem; color:rgba(255,255,255,.5); font-weight:500; margin-top:.25rem; letter-spacing:.04em; text-transform:uppercase; }
+
+        /* ── FEATURES ── */
+        .lp-section { padding: 100px 5%; position: relative; }
+        .lp-section-label {
+            display: inline-flex; align-items: center; gap: .5rem;
+            color: var(--gold); font-size: .78rem; font-weight: 700; letter-spacing: .12em;
+            text-transform: uppercase; margin-bottom: 1rem;
+        }
+        .lp-section-label::before, .lp-section-label::after {
+            content:''; display:block; width:30px; height:1px; background:var(--gold); opacity:.5;
+        }
+        .lp-section-h2 {
+            font-family:'Syne',sans-serif; font-size:clamp(2rem,4vw,3.2rem);
+            font-weight:800; line-height:1.1; letter-spacing:-.03em; margin:0 0 1rem;
+        }
+        .lp-section-sub { color:rgba(255,255,255,.5); font-size:1.05rem; line-height:1.7; max-width:500px; }
+
+        .lp-features-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5px; margin-top: 5rem;
+            border: 1.5px solid rgba(255,255,255,.07); border-radius: 20px; overflow: hidden;
+        }
+        .lp-feat {
+            padding: 2.5rem; background: rgba(255,255,255,.025);
+            transition: background .3s; position: relative; overflow: hidden;
+        }
+        .lp-feat::before {
+            content:''; position:absolute; inset:0;
+            background:linear-gradient(135deg,rgba(250,204,21,.06),transparent);
+            opacity:0; transition:opacity .3s;
+        }
+        .lp-feat:hover::before { opacity:1; }
+        .lp-feat:hover { background: rgba(255,255,255,.04); }
+        .lp-feat-icon {
+            width:52px; height:52px; border-radius:14px;
+            display:flex; align-items:center; justify-content:center;
+            font-size:1.3rem; margin-bottom:1.5rem;
+            background:linear-gradient(135deg,rgba(250,204,21,.15),rgba(250,204,21,.05));
+            border:1px solid rgba(250,204,21,.2); color:var(--gold);
+        }
+        .lp-feat h3 { font-family:'Syne',sans-serif; font-size:1.15rem; font-weight:700; margin:0 0 .75rem; }
+        .lp-feat p  { color:rgba(255,255,255,.5); font-size:.9rem; line-height:1.7; margin:0; }
+
+        /* ── HOW IT WORKS ── */
+        .lp-how { background: rgba(255,255,255,.02); }
+        .lp-steps {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem; margin-top: 4rem;
+        }
+        .lp-step { position: relative; text-align: center; padding: 2rem 1.5rem; }
+        .lp-step-num {
+            font-family:'Syne',sans-serif; font-size:5rem; font-weight:800; line-height:1;
+            color:rgba(250,204,21,.08); position:absolute; top:0; left:50%; transform:translateX(-50%);
+            pointer-events:none; user-select:none;
+        }
+        .lp-step-icon {
+            width:64px; height:64px; border-radius:50%; border:2px solid rgba(250,204,21,.3);
+            display:flex; align-items:center; justify-content:center;
+            font-size:1.4rem; color:var(--gold); margin:1rem auto 1.25rem; position:relative; z-index:1;
+            background:rgba(250,204,21,.07);
+        }
+        .lp-step h3 { font-family:'Syne',sans-serif; font-weight:700; margin:0 0 .5rem; font-size:1.1rem; }
+        .lp-step p  { color:rgba(255,255,255,.5); font-size:.88rem; line-height:1.65; margin:0; }
+        .lp-step-connector {
+            position:absolute; top:50px; right:-1rem; width:2rem; height:2px;
+            background:linear-gradient(90deg,rgba(250,204,21,.3),transparent);
+        }
+
+        /* ── SUBJECTS TICKER ── */
+        .lp-ticker-wrap { overflow: hidden; padding: 1.5rem 0; border-top:1px solid rgba(255,255,255,.07); border-bottom:1px solid rgba(255,255,255,.07); }
+        .lp-ticker-track {
+            display:flex; gap:2.5rem; width:max-content;
+            animation: ticker 22s linear infinite;
+        }
+        .lp-ticker-item {
+            display:flex; align-items:center; gap:.75rem; white-space:nowrap;
+            font-weight:600; font-size:1rem; color:rgba(255,255,255,.35);
+            letter-spacing:.03em;
+        }
+        .lp-ticker-item span { color:var(--gold); }
+        @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+        /* ── TESTIMONIAL ── */
+        .lp-testimonials { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.5rem; margin-top:4rem; }
+        .lp-testi {
+            background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08);
+            border-radius:20px; padding:2rem;
+            transition: border-color .3s;
+        }
+        .lp-testi:hover { border-color:rgba(250,204,21,.25); }
+        .lp-testi-quote { font-size:1rem; line-height:1.75; color:rgba(255,255,255,.75); margin-bottom:1.5rem; font-style:italic; }
+        .lp-testi-stars { color:var(--gold); font-size:.85rem; margin-bottom:1rem; letter-spacing:.1em; }
+        .lp-testi-author { display:flex; align-items:center; gap:.75rem; }
+        .lp-testi-avatar {
+            width:42px; height:42px; border-radius:50%;
+            display:flex; align-items:center; justify-content:center;
+            font-weight:800; font-size:1rem; font-family:'Syne',sans-serif;
+            flex-shrink:0;
+        }
+        .lp-testi-name { font-weight:700; font-size:.9rem; }
+        .lp-testi-role { font-size:.78rem; color:rgba(255,255,255,.4); }
+
+        /* ── CTA BANNER ── */
+        .lp-cta-section {
+            margin: 0 5% 100px; border-radius: 28px; overflow: hidden; position: relative;
+            background: linear-gradient(135deg, #0a2e20 0%, #064e3b 50%, #0a2e20 100%);
+            border: 1px solid rgba(250,204,21,.2);
+        }
+        .lp-cta-section::before {
+            content:''; position:absolute; inset:0;
+            background:
+                radial-gradient(ellipse 60% 80% at 80% 50%, rgba(250,204,21,.08) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 60% at 20% 50%, rgba(4,120,87,.2) 0%, transparent 70%);
+        }
+        .lp-cta-inner { position:relative; z-index:1; padding:5rem; text-align:center; }
+        .lp-cta-h2 { font-family:'Syne',sans-serif; font-size:clamp(2rem,4.5vw,3.5rem); font-weight:800; letter-spacing:-.04em; margin:0 0 1rem; }
+        .lp-cta-sub { color:rgba(255,255,255,.6); font-size:1.1rem; max-width:500px; margin:0 auto 2.5rem; }
+        .lp-cta-actions { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+
+        /* ── FOOTER ── */
+        .lp-footer {
+            border-top: 1px solid rgba(255,255,255,.07);
+            padding: 4rem 5% 2.5rem;
+        }
+        .lp-footer-top { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:3rem; margin-bottom:3rem; }
+        .lp-footer-brand-desc { color:rgba(255,255,255,.4); font-size:.88rem; line-height:1.7; margin-top:.75rem; max-width:280px; }
+        .lp-footer-col h4 { font-family:'Syne',sans-serif; font-weight:700; font-size:.85rem; letter-spacing:.08em; text-transform:uppercase; color:rgba(255,255,255,.35); margin:0 0 1.25rem; }
+        .lp-footer-col ul { list-style:none; padding:0; margin:0; }
+        .lp-footer-col ul li { margin-bottom:.6rem; }
+        .lp-footer-col ul li a { color:rgba(255,255,255,.55); text-decoration:none; font-size:.88rem; transition:color .2s; }
+        .lp-footer-col ul li a:hover { color:var(--gold); }
+        .lp-footer-bottom { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; padding-top:2rem; border-top:1px solid rgba(255,255,255,.06); }
+        .lp-footer-copy { color:rgba(255,255,255,.3); font-size:.82rem; }
+        .lp-footer-socials { display:flex; gap:1rem; }
+        .lp-social-btn {
+            width:36px; height:36px; border-radius:50%; border:1px solid rgba(255,255,255,.15);
+            display:flex; align-items:center; justify-content:center;
+            color:rgba(255,255,255,.4); font-size:.85rem; cursor:pointer;
+            transition:all .2s;
+        }
+        .lp-social-btn:hover { border-color:var(--gold); color:var(--gold); }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeSlideUp {
+            from { opacity:0; transform: translateY(24px); }
+            to   { opacity:1; transform: translateY(0); }
+        }
+        .lp-reveal { opacity:0; transform:translateY(30px); transition:opacity .7s ease, transform .7s ease; }
+        .lp-reveal.visible { opacity:1; transform:translateY(0); }
+        .lp-reveal-delay-1 { transition-delay:.1s; }
+        .lp-reveal-delay-2 { transition-delay:.2s; }
+        .lp-reveal-delay-3 { transition-delay:.3s; }
+        .lp-reveal-delay-4 { transition-delay:.4s; }
+
+        @media (max-width: 900px) {
+            .lp-hero-visual { display:none; }
+            .lp-hero-content { max-width:100%; }
+            .lp-footer-top { grid-template-columns:1fr 1fr; }
+            .lp-nav-links  { display:none; }
+            .lp-cta-inner  { padding:3rem 2rem; }
+        }
     </style>
 </head>
 <body>
@@ -1263,23 +1590,350 @@ const StudentResults = ({ user }) => {
 };
 
 // ══════════════════════════════════════════════════════════════════════════════
+// LANDING PAGE
+// ══════════════════════════════════════════════════════════════════════════════
+const LandingPage = ({ onEnter }) => {
+    const [scrolled, setScrolled] = useState(false);
+
+    useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 40);
+        window.addEventListener('scroll', onScroll);
+
+        // Intersection observer for reveal animations
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.lp-reveal').forEach(el => io.observe(el));
+
+        return () => { window.removeEventListener('scroll', onScroll); io.disconnect(); };
+    }, []);
+
+    const features = [
+        { icon:'fa-bolt',          title:'Live Competitions',    desc:'Join real-time quiz battles against classmates across Jigawa State schools. Every second counts.' },
+        { icon:'fa-brain',         title:'Smart Question Bank',  desc:'Thousands of curriculum-aligned questions across Biology, Maths, Physics, Chemistry, English and Geography.' },
+        { icon:'fa-chart-line',    title:'Instant Analytics',    desc:'Detailed performance breakdowns, subject-wise accuracy, and ranked leaderboards updated in real time.' },
+        { icon:'fa-shield-alt',    title:'Admin Control',        desc:'Full competition lifecycle management — create, assign students, start, end and analyse results.' },
+        { icon:'fa-graduation-cap','title':'Multi-Level Support', desc:'Tailored question sets for both Primary and Secondary School students for age-appropriate challenges.' },
+        { icon:'fa-pen-nib',       title:'Practice Mode',        desc:'No pressure, no timer — practice any subject at your own pace and review every right and wrong answer.' },
+    ];
+
+    const steps = [
+        { icon:'fa-user-plus',   title:'Register',         desc:'Admin creates your account in seconds and assigns you to the right competitions.' },
+        { icon:'fa-sign-in-alt', title:'Login',            desc:'Sign in with your credentials and land straight on your personal dashboard.' },
+        { icon:'fa-play-circle', title:'Join & Compete',   desc:'When a competition goes live, jump in, answer questions before the timer runs out.' },
+        { icon:'fa-trophy',      title:'See Your Results', desc:'View your score, ranking, and detailed answer review the moment you submit.' },
+    ];
+
+    const testimonials = [
+        { quote:'"QuizMaster completely changed how we run inter-school competitions. What used to take days of paperwork now happens in minutes."', stars:5, name:'Mr. Kabiru Musa', role:'Head Teacher, GSS Dutse', color:'#064e3b', letter:'K' },
+        { quote:'"I love the practice mode! I can test myself on Biology before the real competition without any pressure. My scores have improved so much."', stars:5, name:'Amina Yusuf', role:'SS2 Student, Kazaure', color:'#1e40af', letter:'A' },
+        { quote:'"The analytics dashboard helps me identify which subjects my students struggle with most. It\'s genuinely useful data."', stars:5, name:'Mrs. Hafsat Ibrahim', role:'Science Teacher, Hadejia', color:'#7c2d12', letter:'H' },
+    ];
+
+    const subjects = ['Mathematics','Biology','Chemistry','Physics','English Language','Geography','Mathematics','Biology','Chemistry','Physics','English Language','Geography'];
+
+    return (
+        <div className="lp">
+
+            {/* ── NAV ── */}
+            <nav className={`lp-nav ${scrolled?'scrolled':''}`}>
+                <div className="lp-nav-logo">
+                    <div className="lp-nav-logo-icon"><i className="fas fa-trophy"></i></div>
+                    <span>QuizMaster <span style={{color:'var(--gold)'}}>Elite</span></span>
+                </div>
+                <div className="lp-nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#how">How it Works</a>
+                    <a href="#subjects">Subjects</a>
+                    <a href="#testimonials">Reviews</a>
+                </div>
+                <button className="lp-nav-cta" onClick={onEnter}>
+                    <i className="fas fa-sign-in-alt" style={{marginRight:'.4rem'}}></i>Sign In
+                </button>
+            </nav>
+
+            {/* ── HERO ── */}
+            <section className="lp-hero">
+                <div className="lp-hero-grid"></div>
+                <div className="lp-hero-glow lp-hero-glow-1"></div>
+                <div className="lp-hero-glow lp-hero-glow-2"></div>
+                <div className="lp-hero-glow lp-hero-glow-3"></div>
+
+                <div className="lp-hero-content">
+                    <div className="lp-hero-eyebrow">
+                        <div className="lp-hero-eyebrow-dot"></div>
+                        Jigawa State · School Quiz Platform
+                    </div>
+                    <h1 className="lp-hero-h1">
+                        Compete.<br/>
+                        <em>Learn.</em><br/>
+                        Dominate.
+                    </h1>
+                    <p className="lp-hero-sub">
+                        The premier online quiz platform powering inter-school competitions
+                        across Jigawa State. Real-time battles, smart analytics, and
+                        curriculum-aligned questions for every level.
+                    </p>
+                    <div className="lp-hero-actions">
+                        <button className="lp-btn-hero-primary" onClick={onEnter}>
+                            <i className="fas fa-rocket"></i>
+                            Start Competing
+                        </button>
+                        <button className="lp-btn-hero-secondary" onClick={()=>document.getElementById('features').scrollIntoView({behavior:'smooth'})}>
+                            <i className="fas fa-play"></i>
+                            See Features
+                        </button>
+                    </div>
+                    <div className="lp-hero-stats">
+                        {[['6+','Schools'],['24+','Questions'],['6','Subjects'],['100%','Free']].map(([n,l])=>(
+                            <div key={l} className="lp-stat-item">
+                                <div className="lp-stat-num">{n}</div>
+                                <div className="lp-stat-lbl">{l}</div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Floating quiz card */}
+                <div className="lp-hero-visual">
+                    <div style={{position:'relative',height:'380px',width:'100%'}}>
+                        {/* Main card */}
+                        <div className="lp-float-card lp-float-card-main">
+                            <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'1.25rem'}}>
+                                <span style={{fontSize:'.72rem',fontWeight:700,color:'var(--gold)',letterSpacing:'.08em',textTransform:'uppercase',background:'rgba(250,204,21,.1)',padding:'.25rem .75rem',borderRadius:'9999px',border:'1px solid rgba(250,204,21,.2)'}}>
+                                    <i className="fas fa-bolt" style={{marginRight:'.3rem'}}></i>Live · Q4 of 10
+                                </span>
+                                <span style={{fontSize:'.82rem',color:'#ef4444',fontWeight:700}}><i className="fas fa-clock" style={{marginRight:'.3rem'}}></i>00:42</span>
+                            </div>
+                            <p style={{fontWeight:700,fontSize:'.95rem',marginBottom:'1rem',lineHeight:1.5}}>What is the powerhouse of the cell?</p>
+                            {[['A','Nucleus',''],['B','Mitochondria','sel'],['C','Ribosome',''],['D','Chloroplast','']].map(([l,t,cls])=>(
+                                <div key={l} style={{
+                                    display:'flex',alignItems:'center',gap:'.6rem',padding:'.55rem .9rem',
+                                    borderRadius:'.65rem',marginBottom:'.4rem',fontSize:'.82rem',fontWeight:600,
+                                    background: cls?'rgba(250,204,21,.15)':'rgba(255,255,255,.04)',
+                                    border:`1px solid ${cls?'rgba(250,204,21,.4)':'rgba(255,255,255,.08)'}`,
+                                    color: cls?'var(--gold)':'rgba(255,255,255,.7)',
+                                }}>
+                                    <span style={{width:22,height:22,borderRadius:5,background:cls?'rgba(250,204,21,.2)':'rgba(255,255,255,.05)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'.72rem',fontWeight:800,flexShrink:0}}>{l}</span>
+                                    {t}
+                                    {cls && <i className="fas fa-check" style={{marginLeft:'auto',fontSize:'.75rem'}}></i>}
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Score card */}
+                        <div className="lp-float-card lp-float-card-2" style={{top:20,right:-40}}>
+                            <div style={{fontSize:'.7rem',color:'rgba(255,255,255,.4)',marginBottom:'.35rem',fontWeight:600,letterSpacing:'.06em',textTransform:'uppercase'}}>Your Score</div>
+                            <div style={{fontFamily:'Syne,sans-serif',fontSize:'2.2rem',fontWeight:800,color:'var(--gold)',lineHeight:1}}>850</div>
+                            <div style={{fontSize:'.72rem',color:'rgba(255,255,255,.4)',marginTop:'.25rem'}}>
+                                <i className="fas fa-arrow-up" style={{color:'#10b981',marginRight:'.25rem'}}></i>Rank #2
+                            </div>
+                        </div>
+
+                        {/* Live users card */}
+                        <div className="lp-float-card lp-float-card-3" style={{bottom:20,left:-20}}>
+                            <div style={{fontSize:'.7rem',color:'rgba(255,255,255,.4)',marginBottom:'.5rem',fontWeight:600,letterSpacing:'.06em',textTransform:'uppercase'}}>Competing Now</div>
+                            <div style={{display:'flex',gap:'-8px'}}>
+                                {['K','A','M','F'].map((l,i)=>(
+                                    <div key={i} style={{width:28,height:28,borderRadius:'50%',border:'2px solid rgba(5,12,10,1)',display:'flex',alignItems:'center',justifyContent:'center',fontWeight:800,fontSize:'.72rem',marginLeft:i?'-8px':0,background:['#064e3b','#1e40af','#7c2d12','#065f46'][i],zIndex:4-i}}>{l}</div>
+                                ))}
+                                <div style={{width:28,height:28,borderRadius:'50%',border:'2px solid rgba(5,12,10,1)',background:'rgba(255,255,255,.08)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'.65rem',color:'rgba(255,255,255,.5)',marginLeft:'-8px',zIndex:0}}>+3</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* ── TICKER ── */}
+            <div id="subjects" className="lp-ticker-wrap">
+                <div className="lp-ticker-track">
+                    {[...subjects,...subjects].map((s,i) => (
+                        <div key={i} className="lp-ticker-item">
+                            <span>✦</span> {s}
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* ── FEATURES ── */}
+            <section id="features" className="lp-section">
+                <div style={{textAlign:'center',marginBottom:0}}>
+                    <div className="lp-section-label lp-reveal" style={{justifyContent:'center'}}>Everything You Need</div>
+                    <h2 className="lp-section-h2 lp-reveal lp-reveal-delay-1" style={{textAlign:'center',margin:'0 auto 1rem'}}>
+                        Built for serious<br/>academic competition
+                    </h2>
+                    <p className="lp-section-sub lp-reveal lp-reveal-delay-2" style={{margin:'0 auto',textAlign:'center'}}>
+                        Every feature designed around how teachers run and students experience school quiz competitions.
+                    </p>
+                </div>
+                <div className="lp-features-grid">
+                    {features.map((f,i) => (
+                        <div key={i} className={`lp-feat lp-reveal lp-reveal-delay-${(i%4)+1}`}>
+                            <div className="lp-feat-icon"><i className={`fas ${f.icon}`}></i></div>
+                            <h3>{f.title}</h3>
+                            <p>{f.desc}</p>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            {/* ── HOW IT WORKS ── */}
+            <section id="how" className="lp-section lp-how">
+                <div style={{textAlign:'center'}}>
+                    <div className="lp-section-label lp-reveal" style={{justifyContent:'center'}}>Simple Process</div>
+                    <h2 className="lp-section-h2 lp-reveal lp-reveal-delay-1" style={{textAlign:'center',margin:'0 auto 1rem'}}>
+                        From login to<br/>leaderboard in minutes
+                    </h2>
+                </div>
+                <div className="lp-steps">
+                    {steps.map((s,i) => (
+                        <div key={i} className={`lp-step lp-reveal lp-reveal-delay-${i+1}`}>
+                            <div className="lp-step-num">0{i+1}</div>
+                            <div className="lp-step-icon"><i className={`fas ${s.icon}`}></i></div>
+                            <h3>{s.title}</h3>
+                            <p>{s.desc}</p>
+                            {i < steps.length-1 && <div className="lp-step-connector"></div>}
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            {/* ── TESTIMONIALS ── */}
+            <section id="testimonials" className="lp-section">
+                <div style={{textAlign:'center'}}>
+                    <div className="lp-section-label lp-reveal" style={{justifyContent:'center'}}>Voices from Jigawa</div>
+                    <h2 className="lp-section-h2 lp-reveal lp-reveal-delay-1" style={{textAlign:'center',margin:'0 auto'}}>
+                        Trusted by teachers<br/>and students alike
+                    </h2>
+                </div>
+                <div className="lp-testimonials">
+                    {testimonials.map((t,i) => (
+                        <div key={i} className={`lp-testi lp-reveal lp-reveal-delay-${i+1}`}>
+                            <div className="lp-testi-stars">{'★'.repeat(t.stars)}</div>
+                            <p className="lp-testi-quote">{t.quote}</p>
+                            <div className="lp-testi-author">
+                                <div className="lp-testi-avatar" style={{background:t.color}}>{t.letter}</div>
+                                <div>
+                                    <div className="lp-testi-name">{t.name}</div>
+                                    <div className="lp-testi-role">{t.role}</div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            {/* ── CTA BANNER ── */}
+            <div className="lp-cta-section lp-reveal">
+                <div className="lp-cta-inner">
+                    <div className="lp-hero-eyebrow" style={{justifyContent:'center',display:'inline-flex',margin:'0 auto 1.5rem'}}>
+                        <div className="lp-hero-eyebrow-dot"></div>
+                        Ready to Begin?
+                    </div>
+                    <h2 className="lp-cta-h2">
+                        Your next trophy is<br/>one quiz away
+                    </h2>
+                    <p className="lp-cta-sub">
+                        Join hundreds of Jigawa State students already competing, learning, and climbing the leaderboard.
+                    </p>
+                    <div className="lp-cta-actions">
+                        <button className="lp-btn-hero-primary" onClick={onEnter}>
+                            <i className="fas fa-rocket"></i>
+                            Start Now — It's Free
+                        </button>
+                        <button className="lp-btn-hero-secondary" onClick={onEnter} style={{borderColor:'rgba(255,255,255,.2)'}}>
+                            <i className="fas fa-user-shield"></i>
+                            Admin Login
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {/* ── FOOTER ── */}
+            <footer className="lp-footer">
+                <div className="lp-footer-top">
+                    <div>
+                        <div className="lp-nav-logo" style={{marginBottom:'.75rem'}}>
+                            <div className="lp-nav-logo-icon"><i className="fas fa-trophy"></i></div>
+                            <span>QuizMaster <span style={{color:'var(--gold)'}}>Elite</span></span>
+                        </div>
+                        <p className="lp-footer-brand-desc">
+                            Empowering academic excellence through technology. 
+                            The official quiz competition platform for Jigawa State schools.
+                        </p>
+                    </div>
+                    <div className="lp-footer-col">
+                        <h4>Platform</h4>
+                        <ul>
+                            <li><a href="#features">Features</a></li>
+                            <li><a href="#how">How it Works</a></li>
+                            <li><a href="#subjects">Subjects</a></li>
+                            <li><a href="#" onClick={e=>{e.preventDefault();onEnter();}}>Sign In</a></li>
+                        </ul>
+                    </div>
+                    <div className="lp-footer-col">
+                        <h4>Subjects</h4>
+                        <ul>
+                            {['Mathematics','Biology','Chemistry','Physics','English','Geography'].map(s=>(
+                                <li key={s}><a href="#subjects">{s}</a></li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div className="lp-footer-col">
+                        <h4>Levels</h4>
+                        <ul>
+                            <li><a href="#">Primary School</a></li>
+                            <li><a href="#">Secondary School</a></li>
+                            <li><a href="#">Practice Mode</a></li>
+                            <li><a href="#">Live Competitions</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div className="lp-footer-bottom">
+                    <div className="lp-footer-copy">
+                        © 2026 QuizMaster Elite · Jigawa State Edition · All rights reserved
+                    </div>
+                    <div className="lp-footer-socials">
+                        {['fa-twitter','fa-facebook','fa-instagram','fa-youtube'].map(icon=>(
+                            <div key={icon} className="lp-social-btn"><i className={`fab ${icon}`}></i></div>
+                        ))}
+                    </div>
+                </div>
+            </footer>
+        </div>
+    );
+};
+
+// ══════════════════════════════════════════════════════════════════════════════
 // MAIN APP
 // ══════════════════════════════════════════════════════════════════════════════
 const App = () => {
-    const [user, setUser]   = useState(null);
-    const [menu, setMenu]   = useState('overview');
-    const [ready, setReady] = useState(false);
+    const [user, setUser]         = useState(null);
+    const [menu, setMenu]         = useState('overview');
+    const [ready, setReady]       = useState(false);
+    const [showLanding, setShowLanding] = useState(false);
 
     useEffect(() => {
         const saved = localStorage.getItem('qm_user');
         if (saved) { try { setUser(JSON.parse(saved)); } catch {} }
+        else { setShowLanding(true); }
         setReady(true);
     }, []);
 
-    const logout = () => { localStorage.removeItem('qm_user'); setUser(null); setMenu('overview'); };
+    const logout = () => {
+        localStorage.removeItem('qm_user');
+        setUser(null);
+        setMenu('overview');
+        setShowLanding(true);
+    };
 
-    if (!ready) return <div style={{display:'flex',justifyContent:'center',alignItems:'center',height:'100vh'}}><div className="spinner"></div></div>;
-    if (!user)  return <LoginPage onLogin={u=>{ setUser(u); setMenu('overview'); }} />;
+    if (!ready) return <div style={{display:'flex',justifyContent:'center',alignItems:'center',height:'100vh',background:'#050c0a'}}><div className="spinner"></div></div>;
+
+    // Show landing if not logged in
+    if (!user && showLanding) return <LandingPage onEnter={()=>setShowLanding(false)} />;
+
+    // Show login if landing was dismissed
+    if (!user) return <LoginPage onLogin={u=>{ setUser(u); setMenu('overview'); }} />;
 
     const isAdmin = user.role === 'admin';
 
